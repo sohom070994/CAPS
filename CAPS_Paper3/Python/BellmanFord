@@ -1,0 +1,53 @@
+def runBellman(cost,B):
+    
+# Consider a graph of size n
+# cost is an n*n weight matrix representing edge weights for the graph. 
+# B is the upper bound on the number of edges in the shortest path, B<=n.
+
+    # get size of graph from weight matrix
+    tot_nodes = len(cost)
+
+
+    # init a blank matrix of n*n size
+    d=[[None for i in range(pop+1)] for i in range(B+1)]
+    d[0]=[float("inf") for i in range(pop+1)]
+    d[0][0]=0.0
+
+    
+    pathNode=[[None for i in range(pop+1)] for i in range(B+1)]
+
+
+    for k in range(B):
+        for i in range(pop+1):
+            tempMin=float("inf")
+            tempIndex=-1.0
+            for j in range(i):
+                if d[k][j]+cost[j][i]<tempMin:
+                    tempMin=d[k][j]+cost[j][i]
+                    tempIndex=j
+            if tempMin<d[k][i]:
+                d[k+1][i]=tempMin
+                pathNode[k+1][i]=tempIndex
+            else:
+                d[k+1][i]=d[k][i]
+                pathNode[k+1][i]=pathNode[k][i]
+    
+    # construct path
+    path=[]
+    # path.append(node)
+    k=B
+    while node>0:
+        node=pathNode[k][node]
+        path.append(node)
+        k=k-1
+        
+    node_list=path
+    
+    return node_list,of
+
+
+def getOF_from_nodelist(node_list):
+    of=0
+    of+=cost[node_list[0]][slots]
+    for ele in range(0,len(node_list)-1):
+        of+=cost[node_list[ele+1]][node_list[ele]]
